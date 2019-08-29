@@ -3,6 +3,7 @@
 namespace app\web\controllers;
 
 use pandora\base\Controller;
+use pandora\Pandora;
 
 /**
  * 控制器Site
@@ -15,8 +16,17 @@ use pandora\base\Controller;
  */
 class SiteController extends Controller
 {
+    /**
+     * 首页
+     */
     public function actionIndex()
     {
         echo '<h1>Pandora</h1>';
+    }
+
+
+    public function actionSelect()
+    {
+        Pandora::$app->db;
     }
 }

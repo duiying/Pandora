@@ -3,6 +3,7 @@
 namespace pandora\base;
 
 use Exception;
+use pandora\Pandora;
 
 /**
  * 基础应用类
@@ -22,6 +23,9 @@ abstract class Application
      */
     public function run()
     {
+        // 框架核心类初始化
+        Pandora::init();
+
         try {
             return $this->handle();
         } catch (Exception $e) {

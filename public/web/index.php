@@ -7,6 +7,7 @@ ini_set('display_errors', 'on');
 define('ROOT_PATH', dirname(dirname(__DIR__)));
 define('APP_PATH', ROOT_PATH . '/app');
 define('FRAME_PATH', ROOT_PATH . '/framework');
+define('CONFIG_PATH', ROOT_PATH . '/config');
 
 // 自动加载
 require_once ROOT_PATH . '/vendor/autoload.php';
