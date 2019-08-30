@@ -62,7 +62,7 @@ class Model
     }
 
     /**
-     * 将数组转为模型类
+     * 数组转为模型
      *
      * @param $row
      * @return MySQL
@@ -79,8 +79,8 @@ class Model
     /**
      * 构造where条件
      *
-     * @param array $condition
-     * @param array $params
+     * @param array $condition 查询条件
+     * @param array $params 参数
      * @return array
      */
     public static function buildWhere(array $condition = [], array $params = [])
