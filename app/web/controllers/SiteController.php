@@ -2,8 +2,8 @@
 
 namespace app\web\controllers;
 
+use app\web\models\User;
 use pandora\base\Controller;
-use pandora\Pandora;
 
 /**
  * 控制器Site
@@ -27,6 +27,6 @@ class SiteController extends Controller
 
     public function actionSelect()
     {
-        Pandora::$app->db;
+        var_dump(User::findAll(['id' => 1]));
     }
 }

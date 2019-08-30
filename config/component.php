@@ -14,8 +14,8 @@ return [
     'db' => [
         'class' => '\pandora\component\db\MySQL',
         'dsn' => 'mysql:host=mysql;dbname=pandora',
-        'username' => 'root',
-        'password' => 'root',
+        'user' => 'root',
+        'pass' => 'root',
         'options' => [
             \PDO::ATTR_EMULATE_PREPARES => false,
             \PDO::ATTR_STRINGIFY_FETCHES => false,

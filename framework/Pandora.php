@@ -14,11 +14,6 @@ namespace pandora;
 class Pandora
 {
     /**
-     * @var null 本类实例
-     */
-    public static $app = NULL;
-
-    /**
      * @var 组件配置
      */
     private static $componentConfig = NULL;
@@ -33,19 +28,41 @@ class Pandora
      */
     public static function init()
     {
-        // 将本类实例保存在$app中
-        if (self::$app === NULL) {
-            self::$app = new self();
-        }
-
         // 将组件配置保存在$componentConfig中
         if (self::$componentConfig === NULL) {
             self::$componentConfig = require_once self::$componentConfigFile;
         }
     }
 
-    public function __get($name)
+    /**
+     * 获取组件实例
+     *
+     * @param $componentName 组件名称
+     * @return mixed
+     */
+    public static function component($componentName)
     {
-        var_dump(self::$componentConfig);
+        // 组件配置
+        $componentConfig = self::$componentConfig[$componentName];
+        // 组件类
+        $componentClass = $componentConfig['class'];
+        unset($componentConfig['class']);
+
+        // 给静态属性赋值
+        foreach ($componentConfig as $attrName => $attrValue) {
+            $componentClass::$$attrName = $attrValue;
+        }
+
+        // 判断是否是单例
+        $single = method_exists($componentClass, 'getInstance');
+
+        // 单例模式则返回单例，否则新建对象
+        $instance = $single ? $componentClass::getInstance() : new $componentClass();
+
+        // MySQL对象变为PDO对象后，init方法不存在，故作以下检查
+        method_exists($instance, 'init') && $instance->init();
+
+        // 返回实例
+        return $instance;
     }
 }
