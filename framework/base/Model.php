@@ -166,8 +166,6 @@ class Model
 
         $res = $stmt->execute($params);
 
-        $primaryKey = static::primaryKey();
-
         // 将主键赋值给模型
         $primaryKey = static::primaryKey();
         $lastInsertId = Pandora::component('db')->lastInsertId($primaryKey);
