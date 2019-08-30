@@ -28,5 +28,14 @@ class SiteController extends Controller
     public function actionSelect()
     {
         var_dump(User::findAll(['id' => 1]));
+        var_dump(User::findOne(['id' => 2]));
+    }
+
+    public function actionCreate()
+    {
+        $user = new User();
+        $user->name = 'duiying';
+        $user->age = 18;
+        var_dump($user->create());
     }
 }
