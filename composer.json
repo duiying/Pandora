@@ -1,6 +1,6 @@
 {
   "name": "duiying/pandora",
-  "description": "自定义的基于组件的PHP框架",
+  "description": "自定义的组件化PHP框架",
   "license": "MIT",
   "authors": [
     {
