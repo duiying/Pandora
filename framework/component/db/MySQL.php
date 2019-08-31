@@ -6,7 +6,7 @@ use PDO;
 use pandora\base\Component;
 
 /**
- * MySQL组件
+ * MySQL组件(单例模式)
  *
  * PHP version 7
  *

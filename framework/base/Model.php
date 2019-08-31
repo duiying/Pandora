@@ -80,19 +80,24 @@ class Model
      * @param array $condition 查询条件
      * @return array|bool
      */
-    public static function findAll(array $condition)
+    public static function findAll(array $condition = [])
     {
-        if (empty($condition)) {
-            return false;
-        }
-
         list($where, $params) = self::buildWhere($condition);
 
-        $sql = 'select * from ' . static::tableName() . $where;
+        // where条件不为空的时候才拼接where条件
+        if ($where === ' where ') {
+            $sql = 'select * from ' . static::tableName();
+        } else {
+            $sql = 'select * from ' . static::tableName() . $where;
+        }
 
         $stmt = Pandora::component('db')->prepare($sql);
 
-        $res = $stmt->execute($params);
+        if (empty($params)) {
+            $res = $stmt->execute();
+        } else {
+            $res = $stmt->execute($params);
+        }
 
         $models = [];
 
@@ -128,7 +133,6 @@ class Model
         $stmt = Pandora::component('db')->prepare($sql);
 
         $res = $stmt->execute($params);
-
         if ($res) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if (!empty($row)) {
@@ -140,7 +144,7 @@ class Model
     }
 
     /**
-     * 创建一条记录
+     * 创建记录
      *
      * @return mixed
      */
@@ -172,5 +176,102 @@ class Model
         $this->$primaryKey = $lastInsertId;
 
         return $res;
+    }
+
+    /**
+     * 更新多条记录
+     *
+     * @param array $condition
+     * @param array $attributes
+     * @return mixed
+     */
+    public static function updateAll(array $condition, array $attributes)
+    {
+        $sql = 'update ' . static::tableName();
+        $sql .= ' set ';
+
+        $params = array_values($attributes);
+
+        // 字段名
+        $keys = [];
+
+        foreach ($attributes as $key => $value) {
+            array_push($keys, "$key = ?");
+        }
+
+        $sql .= implode(' , ', $keys);
+
+
+        list($where, $params) = self::buildWhere($condition, $params);
+
+        $sql .= $where;
+
+        $stmt = Pandora::component('db')->prepare($sql);
+
+        $res = $stmt->execute($params);
+        if ($res) {
+            // 获取更新的行数
+            $res = $stmt->rowCount();
+        }
+        return $res;
+    }
+
+    /**
+     * 更新单条记录
+     *
+     * @return mixed
+     */
+    public function update()
+    {
+        $primaryKeys = static::primaryKey();
+
+        $primaryKey = static::primaryKey();
+
+        $condition = [$primaryKey => $this->$primaryKey];
+
+        $attributes = [];
+        foreach ($this as $attrName => $attrValue) {
+            if ($attrName != $primaryKey) {
+                $attributes[$attrName] = $attrValue;
+            }
+        }
+
+        return static::updateAll($condition, $attributes);
+    }
+
+    /**
+     * 删除多条记录
+     *
+     * @param $condition
+     * @return mixed
+     */
+    public static function deleteAll(array $condition)
+    {
+        list($where, $params) = static::buildWhere($condition);
+
+        $sql = 'delete from ' . static::tableName() . $where;
+
+        $stmt = Pandora::component('db')->prepare($sql);
+
+        $res = $stmt->execute($params);
+        if ($res) {
+            // 获取删除的行数
+            $res = $stmt->rowCount();
+        }
+        return $res;
+    }
+
+    /**
+     * 删除单条记录
+     *
+     * @return mixed
+     */
+    public function delete()
+    {
+        $primaryKey = static::primaryKey();
+
+        $condition = [$primaryKey => $this->$primaryKey];
+
+        return static::deleteAll($condition);
     }
 }

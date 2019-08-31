@@ -2,6 +2,8 @@
 
 namespace pandora\web;
 
+use pandora\Pandora;
+
 /**
  * WEB应用类
  *
@@ -26,8 +28,14 @@ class Application extends \pandora\base\Application
     public function handle()
     {
         // 路由
-        $router = $_GET['r'];
-        list($controllerName, $actionName) = explode('/', $router);
+        if (isset($_GET['r']) && !empty($_GET['r'])) {
+            $router = $_GET['r'];
+            list($controllerName, $actionName) = explode('/', $router);
+        } else {
+            $controllerName = Pandora::$config['defaultController'];
+            $actionName = Pandora::$config['defaultAction'];
+        }
+
         $controllerNameWithNamespace = $this->controllerNamespace . ucfirst($controllerName) . 'Controller';
         $controller = new $controllerNameWithNamespace();
 

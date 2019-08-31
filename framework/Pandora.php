@@ -14,23 +14,23 @@ namespace pandora;
 class Pandora
 {
     /**
-     * @var 组件配置
+     * @var 配置
      */
-    private static $componentConfig = NULL;
+    public static $config = NULL;
 
     /**
-     * @var string 组件配置文件
+     * @var string 配置文件
      */
-    private static $componentConfigFile = CONFIG_PATH . '/component.php';
+    private static $configFile = CONFIG_PATH . '/config.php';
 
     /**
      * 框架核心类初始化
      */
     public static function init()
     {
-        // 将组件配置保存在$componentConfig中
-        if (self::$componentConfig === NULL) {
-            self::$componentConfig = require_once self::$componentConfigFile;
+        // 将配置保存在$config中
+        if (self::$config === NULL) {
+            self::$config = require_once self::$configFile;
         }
     }
 
@@ -43,7 +43,7 @@ class Pandora
     public static function component($componentName)
     {
         // 组件配置
-        $componentConfig = self::$componentConfig[$componentName];
+        $componentConfig = self::$config['components'][$componentName];
         // 组件类
         $componentClass = $componentConfig['class'];
         unset($componentConfig['class']);
