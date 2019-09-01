@@ -34,7 +34,7 @@ Pandora
 ### 规范
 目录规范
 ```
-
+1. web目录存放WEB相关代码，console目录存放后台脚本相关代码
 ```
 代码规范
 ```
@@ -42,14 +42,26 @@ Pandora
 2. 类名首字母大写
 ```
 
-### 如何引入一个组件
-以redis组件为例。
-
 ### 执行流程分析
+WEB
+```
+1. 入口文件：public/web/index.php。
+2. index.php中执行\pandora\web\Application中的run方法，\pandora\web\Application继承\pandora\base\Application。
+3. \pandora\base\Application中的run方法首先初始化框架核心类(读取配置)，然后调用handle方法处理请求。
+4. \pandora\web\Application中的handle方法分发路由。
+```
 
-### 组件化的实现思路
+### 如何引入并使用组件
+```
+1. 在config/config.php文件中定义了组件信息，包括组件的类名和属性。
+2. 使用Pandora::component('组件名称')的方式使用组件，此时\pandora\Pandora.php中的component方法会读取组件信息并返回组件的对象。
+```
 
-### 自定义模型类的实现思路
+### ORM的实现思路
+```
+1. 基础模型类：\pandora\base\Model.php，自定义的模型类比如\app\web\models\User.php继承基础模型类。
+2. 通过PDO查出相关记录，并通过基础模型类下的arr2Model方法转为Model。
+```
 
 
 
