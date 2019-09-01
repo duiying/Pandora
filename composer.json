@@ -1,6 +1,7 @@
 {
   "name": "duiying/pandora",
   "description": "自定义的组件化PHP框架",
+  "type": "project",
   "license": "MIT",
   "authors": [
     {
@@ -13,6 +14,12 @@
     "psr-4": {
       "pandora\\": "framework/",
       "app\\": "app/"
+    }
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
     }
   }
 }
