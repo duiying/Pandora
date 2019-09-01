@@ -30,7 +30,31 @@ Pandora
 ```
 
 ### 安装
+安装
+```bash
+git clone git@github.com:duiying/Pandora.git
+cd Pandora
+composer update
+```
+数据库配置
+```sql
+-- 新建数据库
+CREATE DATABASE IF NOT EXISTS `pandora`;
 
+-- 选择数据库
+USE `pandora`;
+
+-- 新建测试数据表
+CREATE TABLE IF NOT EXISTS `user` (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50),
+    age INT(11),
+    PRIMARY KEY(id)
+);
+
+-- 插入测试数据
+INSERT INTO `user` (name, age) VALUES('duiying', 23), ('wangyaxian', 23);
+```
 
 ### 规范
 目录规范
