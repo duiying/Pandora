@@ -36,7 +36,7 @@ git clone git@github.com:duiying/Pandora.git
 cd Pandora
 composer update
 ```
-数据库配置
+数据库配置 config/config.php
 ```sql
 -- 新建数据库
 CREATE DATABASE IF NOT EXISTS `pandora`;
