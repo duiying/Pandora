@@ -26,6 +26,8 @@ Pandora
 |--------Pandora.php                    框架核心类
 |----public                             框架入口目录
 |--------web                            WEB入口目录
+|----runtime                            runtime
+|--------cache                          缓存文件目录
 |------------index.php                  入口文件
 ```
 
