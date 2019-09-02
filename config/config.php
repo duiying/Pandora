@@ -27,5 +27,10 @@ return [
                 \PDO::ATTR_STRINGIFY_FETCHES => false,
             ],
         ],
+        // 文件缓存
+        'fileCache' => [
+            'class' => '\pandora\component\cache\FileCache',
+            'cacheFilePath' => ROOT_PATH . '/runtime/cache/',
+        ],
     ],
 ];
